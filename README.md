@@ -12,10 +12,18 @@ which looks like this:
 
 ```yaml
 machine:
+  python:
+    version: 2.7.3
+
   post:
+    # This was required to avoid issues with different builds of python being
+    # used between the gtk libs installed in /usr/lib/python2.7/dist-packages/
+    # and the python which was put inside my virtualenv
+    - pyenv global system
+
     # And we want to start the django-moth server
     # https://circleci.com/docs/background-process
-    - nohup bash -c "python w3af/w3af/core/controllers/ci/setup_moth.py &" > $CIRCLE_ARTIFACTS/setup-moth-nohup.log
+    - nohup bash -c "python django-moth-utils/scripts/setup_moth.py &" > $CIRCLE_ARTIFACTS/setup-moth-nohup.log
 
 dependencies:
   cache_directories:
@@ -23,15 +31,17 @@ dependencies:
     - "django-moth"
   pre:
     # Wait for the daemon to be available to run the tests
-    - w3af/core/controllers/ci/wait_for_moth.py
+    - python scripts/wait_for_moth.py
 
 test:
   override:
+    - "pylint --msg-template='{msg_id}:{line:3d},{column}: {obj}: {msg}' -E scripts tests utils"
+
     # Run some test which uses django-moth here:
-    - w3af/core/controllers/ci/nosetests_wrapper/main.py
+    - nosetests tests/
 
     # Cleanup
-    - w3af/core/controllers/ci/teardown_moth.py
+    - python scripts/teardown_moth.py
 ```
 
 An real-life example of this can be found at our repository `circle.yml` which is used to test
