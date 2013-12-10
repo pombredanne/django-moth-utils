@@ -3,6 +3,9 @@ django-moth-utils
 
 Utilities to automate the process of installing and monitoring django-moth
 
+[![Build badge](https://circleci.com/gh/andresriancho/django-moth-utils.png?circle-token=db09c526cfef3c6826d77c3145d40cfdad6342d8)](https://circleci.com/gh/andresriancho/django-moth-utils)
+
+
 Usage
 =====
 
