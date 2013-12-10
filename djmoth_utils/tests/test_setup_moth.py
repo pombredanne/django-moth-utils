@@ -1,7 +1,7 @@
 import unittest
 import requests
 
-from utils.moth import get_moth_http
+from djmoth_utils.utils.moth import get_moth_http
 
 
 class TestSetupMoth(unittest.TestCase):

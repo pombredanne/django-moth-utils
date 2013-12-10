@@ -29,7 +29,7 @@ import logging
 import tempfile
 import subprocess
 
-from utils import configure_logging
+from djmoth_utils.scripts.utils import configure_logging
 
 
 DJANGO_MOTH_REPO = 'https://github.com/andresriancho/django-moth.git'
